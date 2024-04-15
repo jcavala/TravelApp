@@ -1,0 +1,28 @@
+﻿@using TravelApp.Client.Components
+
+@foreach(var item in destinations.Select((val,i)=>(val,i)))
+{
+    var destination = item.val;
+    <h2>@destination.name</h2>
+    <p>@destination.description</p>
+    @if (destination.Images.Count == 1)
+    {
+        <p>
+            <img src="@destination.Images[0].data" />
+        </p>
+    }
+    else if (destination.Images.Count > 1)
+    {
+        <MyCarousel images="destination.Images"/>
+    }
+
+    <div id="map_@item.i"></div>
+}
+
+
+
+
+@code {
+    List<TravelApp.Client.Destination> destinations;
+    
+}

@@ -1,0 +1,69 @@
+﻿@page "/file-upload"
+@using System
+@using System.IO
+@using Microsoft.AspNetCore.Hosting
+@inject ILogger<FileUpload> Logger
+@inject IWebHostEnvironment Environment
+
+<p>Name</p>
+<InputText @bind-Value="destination.name"/>
+<p>Description</p>
+<InputText @bind-Value="destination.description" />
+<p>Image</p>
+<InputText @bind-Value="destination.image" />
+<InputFile OnChange="LoadFiles" multiple />
+<button @onclick="()=>onAddDestination.InvokeAsync(destination)">Add destination</button>
+
+
+@foreach (var file in AllFiles)
+{
+    <p>@file</p>
+}
+
+
+
+@code {
+    private List<IBrowserFile> loadedFiles = new();
+    private long maxFileSize = 1024 * 1024 * 150;
+    private int maxAllowedFiles = 5;
+    private bool isLoading = false;
+    [Parameter]
+    public List<string>? AllFiles{ get; set; }
+    [Parameter]
+    public EventCallback<TravelApp.Components.Pages.Home.Destination> onAddDestination { get; set; }
+    public TravelApp.Components.Pages.Home.Destination destination = new();
+
+    private async Task LoadFiles(InputFileChangeEventArgs e)
+    {
+        isLoading = true;
+        loadedFiles.Clear();
+
+
+        foreach (var file in e.GetMultipleFiles(maxAllowedFiles))
+        {
+            try
+            {
+
+                var path = Path.Combine(Environment.ContentRootPath, "wwwroot",
+                    file.Name);
+
+                await using FileStream fs = new(path, FileMode.Create);
+                await file.OpenReadStream(maxFileSize).CopyToAsync(fs);
+
+                loadedFiles.Add(file);
+
+                Logger.LogInformation(
+                    " File saved: {Filename}",file.Name);
+                AllFiles.Add(file.Name);
+                destination.image = file.Name;
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError("File: {Filename} Error: {Error}",
+                    file.Name, ex.Message);
+            }
+        }
+
+        isLoading = false;
+    }
+}

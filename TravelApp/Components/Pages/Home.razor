@@ -1,0 +1,56 @@
+﻿@page "/"
+@rendermode InteractiveServer
+@inject IJSRuntime JS
+@implements IAsyncDisposable
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<button @onclick="toggleMessage">Toggle Message</button>
+@if(isActive){<p>Hello from server</p> <p>Child message: @message</p>}
+
+<FileUpload AllFiles="fileNames" onAddDestination="addDestination"/>
+
+@* <img src="Screenshot (113).png"/> *@
+@foreach (var dest in destinations)
+{
+    <DestinationComponent destination="dest" />
+}
+
+    @code{
+        bool isActive = false;
+        List<string> fileNames = new();
+        string message = "nothing";
+        IJSObjectReference module;
+    public List<Destination> destinations = new();
+    void toggleMessage(){isActive=!isActive;}
+    void addDestination(Destination d) { destinations.Add( d); }
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        destinations = new();
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender){
+
+        module = await JS.InvokeAsync<IJSObjectReference>("import", "./Components/Pages/Home.razor.js");
+        //await module.InvokeVoidAsync("SayHello");
+
+    }
+    async ValueTask IAsyncDisposable.DisposeAsync()
+    {
+        if (module is not null)
+        {
+            await module.DisposeAsync();
+        }
+    }
+    public class Destination{ 
+        public string name {get;set;} = "polazak";
+        public string description { get; set; } = "default description";
+        public string image { get; set; } = "cro.jpg";
+        public string location { get; set; } = "croatia";
+
+    }
+}

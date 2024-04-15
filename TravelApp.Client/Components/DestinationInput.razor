@@ -1,0 +1,12 @@
+﻿<h3>DestinationInput</h3>
+
+<p>Naziv: </p>
+<input @bind-value = "destination.name"/>
+<p>Opis: </p>
+<InputText @bind-value="destination.description" />
+
+
+
+@code {
+    TravelApp.Client.Destination destination;
+}

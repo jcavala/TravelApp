@@ -1,0 +1,10 @@
+﻿<h3>@destination.name</h3>
+<p>@destination.description</p>
+<img src="@destination.image" />
+<p>location: @destination.location</p>
+
+
+@code {
+    [Parameter]
+    public TravelApp.Components.Pages.Home.Destination destination{ get; set; }
+}

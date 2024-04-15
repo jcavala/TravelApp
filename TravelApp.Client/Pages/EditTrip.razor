@@ -1,0 +1,96 @@
+﻿@page "/edit-trip"
+@rendermode InteractiveAuto
+
+<h3>Edit Trip</h3>
+
+<div>
+    <fieldset>
+        <InputRadioGroup @bind-Value=ElementType>
+            <label>Naslov<InputRadio Value="1" /></label>
+            <label>Paragraf<InputRadio Value="2" /></label>
+            <label>Slika<InputRadio Value="3" /></label>
+            <label>Lokacija<InputRadio Value="4" /></label>
+        </InputRadioGroup>
+    </fieldset>
+    <button @onclick="addElement">Dodaj element</button>
+</div>
+<div>
+    Change value
+    <input @bind-value=value/> <br/>
+    <p>
+        <label>
+            Upload
+            <InputFile OnChange="LoadFiles" multiple />
+        </label>
+    </p>
+    <button>izmjeni</button>
+</div>
+@{
+    foreach(var element in elements)
+    {
+          @element
+    }
+}
+
+@code {
+    List<MarkupString> elements;
+    int ElementType = 0;
+    string value = "";
+    private List<IBrowserFile> loadedFiles = new();
+    private long maxFileSize = 1024 * 15;
+    private int maxAllowedFiles = 3;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        elements = new List<MarkupString>();
+
+    }
+
+    void addElement()
+    {
+        string element = "";
+        if (ElementType == 1)
+        {
+            element = $"<h1>{value}</h1>";
+        }
+        if (ElementType == 2)
+        {
+            element = $"<p>{value}</p>";
+        }
+        if (ElementType == 3)
+        {
+            element = $"<img src={value}/>";
+        }
+        if (ElementType == 4)
+        {
+            throw new NotImplementedException();
+            //element = $"<h1>{value}</h1>";
+        }
+        elements.Add((MarkupString)element);
+    }
+    private async void LoadFiles(InputFileChangeEventArgs e)
+    {
+
+        loadedFiles.Clear();
+
+        foreach (var file in e.GetMultipleFiles(1))
+        {
+            var path = @"C:\dotnet\TravelApp\somefile.txt";
+            await using FileStream fs = new(path, FileMode.Create);
+            await file.OpenReadStream(maxFileSize).CopyToAsync(fs);
+            try
+            {
+                loadedFiles.Add(file);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+        }
+
+        
+    }
+
+
+}

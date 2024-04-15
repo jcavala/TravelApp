@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34407.89
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TravelApp", "TravelApp\TravelApp.csproj", "{A2F8C22F-D650-4493-B9B0-3D9D7358C39D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TravelApp.Client", "TravelApp.Client\TravelApp.Client.csproj", "{C2A1A92B-9CB1-49E1-9CEE-B6D0DD99A6F3}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shared", "Shared\Shared.shproj", "{2EEA88D3-0BE8-40E0-BF60-F7E7D9C581EE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A2F8C22F-D650-4493-B9B0-3D9D7358C39D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2F8C22F-D650-4493-B9B0-3D9D7358C39D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2F8C22F-D650-4493-B9B0-3D9D7358C39D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2F8C22F-D650-4493-B9B0-3D9D7358C39D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2A1A92B-9CB1-49E1-9CEE-B6D0DD99A6F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2A1A92B-9CB1-49E1-9CEE-B6D0DD99A6F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2A1A92B-9CB1-49E1-9CEE-B6D0DD99A6F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2A1A92B-9CB1-49E1-9CEE-B6D0DD99A6F3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {97DCDFD1-BA85-4608-9676-2A88B8234501}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Shared\Shared.projitems*{2eea88d3-0be8-40e0-bf60-f7e7d9c581ee}*SharedItemsImports = 13
+		Shared\Shared.projitems*{a2f8c22f-d650-4493-b9b0-3d9d7358c39d}*SharedItemsImports = 5
+		Shared\Shared.projitems*{c2a1a92b-9cb1-49e1-9cee-b6d0dd99a6f3}*SharedItemsImports = 5
+	EndGlobalSection
+EndGlobal

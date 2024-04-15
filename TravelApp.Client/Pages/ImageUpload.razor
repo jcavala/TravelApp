@@ -1,0 +1,34 @@
+﻿@page "/image-upload"
+@rendermode InteractiveWebAssembly
+<h1>Image Uploader</h1>
+
+<InputFile type="file" OnChange="OnInputFileChange" accept="image/*" />
+<br />
+
+@if (imageData != null)
+{
+    <img src="@imageData" alt="Uploaded Image" />
+}
+
+@code {
+    private string imageData;
+
+    public async Task OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+
+        if (file != null)
+        {
+            var buffer = new byte[file.Size];
+            await file.OpenReadStream().ReadAsync(buffer);
+            var mimeType = file.ContentType;
+
+            imageData = $"data:{mimeType};base64,{Convert.ToBase64String(buffer)}";
+        }
+        else
+        {
+            imageData = null;
+        }
+    }
+}
+

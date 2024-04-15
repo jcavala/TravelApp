@@ -1,0 +1,69 @@
+﻿@page "/trip"
+@rendermode InteractiveAuto
+@using TravelApp.Client;
+<h3>Trip</h3>
+
+<div class="container-fluid">
+  <p>Ovo je stranica za uređivanje putovanja</p>  
+  <div class="row">
+        <div class="col-sm-6">
+            <button class="button" @onclick="addDay"> Add day</button>
+        </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6" style="background-color:yellow;">
+        <ul>
+            @foreach(var day in trip.days)
+            {
+                    <li @onclick="()=>selectDay(day)">@day.name</li>
+            }
+            </ul>
+        </div>
+    <div class="col-sm-6" style="background-color:pink;">
+        <ul>
+                @if (selectedDay!=null)
+                {
+                    foreach (var destination in selectedDay.Destinations)
+                    {
+                        <li>@destination.name <div>@((MarkupString)destination.location)</div></li>
+                        
+                    }
+                } else
+                {
+                    <p> no day selected</p>
+                }
+            </ul>
+        </div>
+  </div>
+</div>
+<input @bind-value=selectedDay!.Destinations[0].location />
+
+@code {
+    Travel trip;
+    Day selectedDay;
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        var d1 = new Destination() { location = "Zagreb", name = "polazište" };
+        var d2 = new Destination() { location = "Ljubljana", name = "odredište 1" };
+        
+        var day1 = new Day(); day1.Destinations.Add(d1); day1.Destinations.Add(d2);
+        trip = new Travel();
+        trip.days.Add(day1);
+        selectedDay = trip.days[0];
+    }
+    private void selectDay(Day day)
+    {
+        selectedDay = day;
+        Console.WriteLine("Day selected : " + day.name);
+    }
+    private void addDay(MouseEventArgs e)
+    {
+        var d = new Day();
+        var d1 = new Destination() { location = "Beč", name = "odrediše 2" };
+        var d2 = new Destination() { location = "Prag", name = "odredište 3" };
+        d.Destinations.Add(d1); d.Destinations.Add(d2);
+        trip.days.Add(d);
+    }
+}
